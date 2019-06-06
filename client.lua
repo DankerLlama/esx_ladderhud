@@ -18,7 +18,7 @@ local thirst, hunger = 0, 0
 
 Citizen.CreateThread(function ()
     while true do
-        Citizen.Wait(250)
+        Citizen.Wait(1000)
         SendNUIMessage({
             show = IsPauseMenuActive(),
             thirst = thirst,
@@ -28,5 +28,11 @@ Citizen.CreateThread(function ()
 end)
 
 AddEventHandler("esx_ladderhud:updateBasics", function(basics)
-    hunger, thirst = basics[1].percent, basics[2].percent
+    for i=1, #basics, 1 do
+        if basics[i].name == 'hunger' then
+            hunger = basics[i].percent
+        elseif  basics[i].name == 'thirst' then
+            thirst = basics[i].percent
+        end
+    end
 end)
